@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="TheInternetProductionSuite" 
+       parallel="methods" 
+       thread-count="4" 
+       verbose="2"
+       configfailurepolicy="continue"
+       time-out="600000">
+    
+    <!-- Global Parameters -->
+    <parameter name="browser" value="chrome"/>
+    <parameter name="headless" value="false"/>
+    <parameter name="env" value="test"/>
+    
+    <!-- Listeners - Order matters! -->
+    <listeners>
+        <!-- Auto-adds retry analyzer to all tests -->
+        <listener class-name="utils.AnnotationTransformer"/>
+        <!-- Enhanced test reporting -->
+        <listener class-name="utils.TestListener"/>
+        <!-- Allure reporting -->
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+        <!-- Method Interceptor for sorting -->
+        <listener class-name="org.testng.reporters.EmailableReporter2"/>
+    </listeners>
+    
+    <!-- Smoke Tests - Fast, critical path tests -->
+    <test name="SmokeTests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.FormAuthenticationTests"/>
+            <class name="tests.HomePageTests"/>
+        </classes>
+    </test>
+    
+    <!-- Element Interaction Tests -->
+    <test name="ElementTests">
+        <packages>
+            <package name="tests.element"/>
+        </packages>
+        <classes>
+            <class name="tests.AddRemoveElementsTests"/>
+            <class name="tests.CheckboxesTests"/>
+            <class name="tests.DropdownTests"/>
+            <class name="tests.JavaScriptAlertsTests"/>
+            <class name="tests.KeyPressesTests"/>
+        </classes>
+    </test>
+    
+    <!-- Advanced Interaction Tests -->
+    <test name="AdvancedTests">
+        <classes>
+            <class name="tests.DragAndDropTests"/>
+            <class name="tests.HoversTests"/>
+            <class name="tests.FramesTests"/>
+            <class name="tests.MultipleWindowsTests"/>
+        </classes>
+    </test>
+    
+    <!-- Data & Dynamic Tests -->
+    <test name="DataTests">
+        <classes>
+            <class name="tests.DataDrivenTests"/>
+            <class name="tests.FormAuthenticationTests"/>
+            <class name="tests.DynamicLoadingTests"/>
+            <class name="tests.DisappearingElementsTests"/>
+            <class name="tests.ChallengingDOMTests"/>
+        </classes>
+    </test>
+    
+    <!-- Table & File Tests -->
+    <test name="DataHandlingTests">
+        <classes>
+            <class name="tests.DataTablesTests"/>
+            <class name="tests.FileUploadTests"/>
+            <class name="tests.InfiniteScrollTests"/>
+        </classes>
+    </test>
+    
+</suite>
