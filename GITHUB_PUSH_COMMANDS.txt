@@ -1,0 +1,17 @@
+cd /home/ubuntu/clawd/the-internet-tests
+
+# Step 1: Configure git (already done)
+git config user.name "VaishakSv"
+git config user.email "svvaishak@gmail.com"
+
+# Step 2: Add remote repository
+# Replace YOUR_GITHUB_USERNAME with your actual username
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/selenium-the-internet-framework.git
+
+# Step 3: Verify remote
+git remote -v
+
+# Step 4: Push to GitHub
+git push -u origin main
+
+# When prompted for password, use your GitHub Personal Access Token
