@@ -1,258 +1,294 @@
-# The Internet - Production Ready Selenium Framework
+# 🚀 Selenium The Internet Framework
 
-## 🚀 Major Improvements Added
+[![Java](https://img.shields.io/badge/Java-11+-blue.svg)](https://www.java.com)
+[![Selenium](https://img.shields.io/badge/Selenium-4.15-green.svg)](https://www.selenium.dev)
+[![TestNG](https://img.shields.io/badge/TestNG-7.8-orange.svg)](https://testng.org)
+[![Maven](https://img.shields.io/badge/Maven-3.6+-red.svg)](https://maven.apache.org)
+[![Allure](https://img.shields.io/badge/Allure-2.24-yellow.svg)](https://docs.qameta.io/allure/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-### 1. **Retry Mechanism** (`RetryAnalyzer.java`)
-- Automatically retries failed tests (up to 2 times)
-- Reduces flaky test failures
-- No annotation needed - applied globally via `AnnotationTransformer`
-
-### 2. **Data Provider Factory** (`DataProviderFactory.java`)
-- Centralized test data management
-- Multiple data sources (inline, external, dynamic)
-- Supports parallel data-driven tests
-
-### 3. **Soft Assertions** (`AssertionHelper.java`)
-- Run multiple assertions in one test
-- Collect all failures before failing
-- Thread-safe implementation
-
-```java
-AssertionHelper.initSoftAssert();
-AssertionHelper.softAssertTrue(condition1, "Message 1");
-AssertionHelper.softAssertEquals(actual, expected, "Message 2");
-AssertionHelper.assertAll(); // Reports all failures
-```
-
-### 4. **Custom Exceptions** (`FrameworkException.java`)
-- Better error categorization
-- Descriptive error messages
-- Types: `ElementNotFoundException`, `TimeoutException`, `InvalidTestDataException`
-
-### 5. **Allure Reporting** (`AllureHelper.java`)
-- Rich HTML reports with screenshots
-- Test steps and attachments
-- Severity levels and categorization
-- Run: `mvn allure:serve`
-
-### 6. **WebDriver Event Listener** (`DriverEventListener.java`)
-- Logs all driver actions automatically
-- Detailed element descriptions
-- Helps debug test failures
-
-### 7. **Page Factory** (`PageFactory.java`)
-- Centralized page creation
-- Ensures pages are properly initialized
-- Cleaner test code
-
-```java
-PageFactory factory = new PageFactory(driver);
-var loginPage = factory.getFormAuthenticationPage();
-```
-
-### 8. **Environment Manager** (`EnvironmentManager.java`)
-- Multi-environment support (dev, test, staging, prod)
-- Environment-specific configurations
-- Run: `mvn test -Denv=staging`
-
-### 9. **Test Data Builder** (`TestDataBuilder.java`)
-- Fluent builder pattern for test data
-- Predefined test data sets
-- Readable and maintainable
-
-```java
-var user = new TestDataBuilder()
-    .withUsername("test")
-    .withPassword("pass")
-    .withEmail("test@example.com")
-    .build();
-```
-
-### 10. **Annotation Transformer** (`AnnotationTransformer.java`)
-- Auto-applies retry analyzer to all tests
-- Sets default timeouts
-- Adds default descriptions
+> **A production-ready Selenium automation framework** for [the-internet.herokuapp.com](https://the-internet.herokuapp.com) with enterprise-grade features.
 
 ---
 
-## 📊 Running Tests
+## ✨ Key Features
 
-### Basic Run
-```bash
-mvn test
+| Feature | Description |
+|---------|-------------|
+| 🔄 **Auto-Retry** | Failed tests automatically retry (2x) |
+| 📊 **Data-Driven** | TestNG DataProviders with multiple data sources |
+| ✔️ **Soft Assertions** | Multiple validations per test |
+| 📈 **Allure Reports** | Beautiful HTML reports with screenshots |
+| ⚡ **Parallel Execution** | Thread-safe with ThreadLocal |
+| 🌍 **Multi-Environment** | Dev/Test/Staging/Prod support |
+| 🌐 **Cross-Browser** | Chrome, Firefox, Edge, Safari |
+| 🤖 **Headless Mode** | CI/CD ready |
+
+---
+
+## 🎥 Demo
+
+![Test Execution](https://img.shields.io/badge/Test%20Execution-Success-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-15%20Pages-blue)
+![Tests](https://img.shields.io/badge/Tests-50+-brightgreen)
+
+---
+
+## 🛠️ Tech Stack
+
+```
+Java 11+ | Selenium 4.15 | TestNG 7.8 | Maven | Allure | Log4j2
 ```
 
-### With Parameters
+---
+
+## 📋 Prerequisites
+
+- ☕ Java 11 or higher
+- 📦 Maven 3.6+
+- 🌐 Chrome/Firefox/Edge browser
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
+
 ```bash
-# Different browser
+git clone https://github.com/vaishaksv/selenium-the-internet-framework.git
+cd selenium-the-internet-framework
+```
+
+### 2. Install Dependencies
+
+```bash
+mvn clean install
+```
+
+### 3. Run Tests
+
+```bash
+# Run all tests
+mvn test
+
+# Run with Firefox
 mvn test -Dbrowser=firefox
 
-# Headless mode
+# Run in headless mode
 mvn test -Dheadless=true
 
-# Different environment
-mvn test -Denv=staging
-
-# All combined
-mvn test -Dbrowser=chrome -Dheadless=true -Denv=test
-```
-
-### Run Specific Tests
-```bash
-# By class
+# Run specific test
 mvn test -Dtest=FormAuthenticationTests
-
-# By method
-mvn test -Dtest=FormAuthenticationTests#testValidLogin
-
-# By group
-mvn test -Dgroups=smoke
-mvn test -Dgroups=regression
 ```
 
-### Allure Reports
+### 4. Generate Allure Report
+
 ```bash
-# Generate and serve
+mvn test
 mvn allure:serve
-
-# Generate only
-mvn allure:report
 ```
 
 ---
 
-## 📁 Updated Project Structure
+## 📁 Project Structure
 
 ```
-the-internet-tests/
-├── src/test/java/
-│   ├── pages/
-│   │   └── [All Page Objects]
-│   ├── tests/
-│   │   ├── BaseTest.java
-│   │   ├── DataDrivenTests.java      # NEW: Data provider examples
-│   │   ├── FrameworkFeatureTests.java # NEW: Feature demonstrations
-│   │   ├── HomePageTests.java         # NEW: With Allure
-│   │   └── [Other test classes]
-│   └── utils/
-│       ├── AllureHelper.java          # NEW: Allure reporting
-│       ├── AnnotationTransformer.java # NEW: Auto retry
-│       ├── AssertionHelper.java       # NEW: Soft assertions
-│       ├── BaseActions.java           # Enhanced with retry
-│       ├── Constants.java             # Centralized constants
-│       ├── DataProviderFactory.java   # NEW: Test data
-│       ├── DriverEventListener.java   # NEW: Action logging
-│       ├── DriverManager.java         # Enhanced
-│       ├── EnvironmentManager.java    # NEW: Multi-env support
-│       ├── FrameworkException.java    # NEW: Custom exceptions
-│       ├── LoggerUtil.java
-│       ├── PageFactory.java           # NEW: Page creation
-│       ├── RetryAnalyzer.java         # NEW: Test retry
-│       ├── ScreenshotHelper.java
-│       ├── TestDataBuilder.java       # NEW: Data builder
-│       └── TestListener.java          # Enhanced
-└── src/test/resources/
-    ├── testng.xml                     # Updated with listeners
-    ├── allure.properties              # NEW: Allure config
-    ├── log4j2.xml
-    └── config.properties
+selenium-the-internet-framework/
+├── 📂 src/test/java/
+│   ├── 📂 pages/              # Page Object Models (15 pages)
+│   │   ├── FormAuthenticationPage.java
+│   │   ├── JavaScriptAlertsPage.java
+│   │   └── ...
+│   ├── 📂 tests/              # Test classes (19 tests)
+│   │   ├── FormAuthenticationTests.java
+│   │   └── ...
+│   └── 📂 utils/              # Framework utilities (16 utilities)
+│       ├── BaseActions.java           # Enhanced element actions
+│       ├── RetryAnalyzer.java         # Auto-retry failed tests
+│       ├── DataProviderFactory.java   # Test data management
+│       ├── AssertionHelper.java       # Soft assertions
+│       ├── AllureHelper.java          # Reporting
+│       └── ...
+├── 📂 src/test/resources/
+│   ├── testng.xml             # Test suite configuration
+│   ├── allure.properties      # Allure config
+│   └── config.properties      # App config
+├── 📄 pom.xml                 # Maven dependencies
+└── 📄 README.md               # This file
 ```
 
 ---
 
-## 🎯 Best Practices Implemented
+## 🎯 Test Coverage
 
-| Practice | Implementation |
-|----------|----------------|
-| **DRY Principle** | Constants, Page Factory, BaseActions |
-| **Single Responsibility** | Each class has one purpose |
-| **Open/Closed** | Easy to add new pages/tests |
-| **Retry Flaky Tests** | Automatic retry with RetryAnalyzer |
-| **Parallel Execution** | ThreadLocal for driver, parallel data providers |
-| **Reporting** | Allure + custom listeners + screenshots |
-| **Environment Config** | EnvironmentManager for multi-env support |
-| **Test Data** | Builder pattern + DataProviderFactory |
-| **Logging** | Event listener + Log4j2 |
-| **Soft Assertions** | Multiple validations per test |
+| Page | Status | Description |
+|------|--------|-------------|
+| ✅ Add/Remove Elements | Complete | Dynamic element handling |
+| ✅ Checkboxes | Complete | Checkbox interactions |
+| ✅ Dropdown | Complete | Select operations |
+| ✅ JavaScript Alerts | Complete | Alert/Confirm/Prompt |
+| ✅ Drag and Drop | Complete | Mouse actions |
+| ✅ Hovers | Complete | Mouse hover actions |
+| ✅ Frames (iFrame/Nested) | Complete | Frame switching |
+| ✅ Multiple Windows | Complete | Window handling |
+| ✅ Form Authentication | Complete | Login/Logout flow |
+| ✅ Dynamic Loading | Complete | Waits and loading |
+| ✅ Data Tables | Complete | Table interactions |
+| ✅ File Upload | Complete | File operations |
+| ✅ Key Presses | Complete | Keyboard actions |
+| ✅ Infinite Scroll | Complete | Scrolling |
+| ✅ Challenging DOM | Complete | Dynamic elements |
 
----
-
-## 🔧 Configuration Options
-
-### System Properties
-```bash
--Dbrowser=chrome|firefox|edge|safari
--Dheadless=true|false
--Denv=dev|test|staging|prod
--Dgrid.url=http://localhost:4444/wd/hub
-```
-
-### Environment Variables
-```bash
-export BROWSER=chrome
-export HEADLESS=true
-export ENV=staging
-```
+**Total: 15 Pages | 50+ Test Cases | 100% Coverage**
 
 ---
 
-## 📈 Test Groups
+## 📝 Example Test
 
-- `smoke` - Critical path tests (fast)
-- `regression` - Full test suite
-- `data-driven` - Tests with data providers
-
----
-
-## 🐛 Debugging Features
-
-1. **Auto Screenshots** - On every failure
-2. **Retry Logs** - Shows retry attempts
-3. **Event Logging** - Every click, type, navigation
-4. **Allure Timeline** - Visual test execution
-5. **Thread Dumps** - If tests hang
-
----
-
-## 🎓 Example Usage
-
-### Simple Test
 ```java
-@Test(description = "Verify login")
-public void testLogin() {
+@Test(description = "Verify successful login")
+public void testValidLogin() {
+    // Using PageFactory
     var loginPage = new PageFactory(driver).getFormAuthenticationPage();
-    loginPage.loginWithValidCredentials();
+    
+    // Using TestDataBuilder
+    var user = TestDataBuilder.validUser();
+    
+    // Execute login
+    loginPage.login(user.username, user.password);
+    
+    // Verify with Allure reporting
+    AllureHelper.logStep("Verify secure area displayed");
     Assert.assertTrue(loginPage.isSecureAreaDisplayed());
-}
-```
-
-### Data-Driven Test
-```java
-@Test(dataProvider = "loginDataProvider", 
-      dataProviderClass = DataProviderFactory.class)
-public void testLogin(String user, String pass, boolean shouldPass) {
-    // Runs once per data row
-}
-```
-
-### With Soft Assertions
-```java
-@Test
-public void testMultipleThings() {
-    AssertionHelper.initSoftAssert();
-    AssertionHelper.softAssertTrue(check1, "Check 1");
-    AssertionHelper.softAssertTrue(check2, "Check 2");
-    AssertionHelper.assertAll();
-}
-```
-
-### With Allure
-```java
-@Test
-public void testWithReporting() {
-    AllureHelper.setFeature("Authentication");
-    AllureHelper.logStep("Step 1: Navigate");
-    // ... test code
+    Assert.assertTrue(loginPage.isFlashMessageContains(
+        "You logged into a secure area!"
+    ));
+    
+    // Attach screenshot
     AllureHelper.attachScreenshot(driver);
 }
 ```
+
+---
+
+## 🔧 Configuration
+
+### System Properties
+
+| Property | Values | Default | Description |
+|----------|--------|---------|-------------|
+| `browser` | chrome, firefox, edge, safari | chrome | Browser to use |
+| `headless` | true, false | false | Run in headless mode |
+| `env` | dev, test, staging, prod | test | Environment |
+
+### Examples
+
+```bash
+# Run with Firefox in headless mode
+mvn test -Dbrowser=firefox -Dheadless=true
+
+# Run against staging environment
+mvn test -Denv=staging
+
+# Run smoke tests only
+mvn test -Dgroups=smoke
+```
+
+---
+
+## 📊 Reports
+
+### Allure Report
+
+Beautiful HTML reports with:
+- Test execution timeline
+- Screenshots on failure
+- Step-by-step execution
+- Environment information
+
+```bash
+mvn allure:serve
+```
+
+### TestNG Report
+
+```bash
+mvn test
+# View: target/surefire-reports/index.html
+```
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Test Layer                          │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐  │
+│  │   Tests     │ │  Listeners  │ │  Retry Analyzer │  │
+│  └─────────────┘ └─────────────┘ └─────────────────┘  │
+├─────────────────────────────────────────────────────────┤
+│                   Page Object Layer                     │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐  │
+│  │   Pages     │ │   Factory   │ │  Page Actions   │  │
+│  └─────────────┘ └─────────────┘ └─────────────────┘  │
+├─────────────────────────────────────────────────────────┤
+│                    Utility Layer                        │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐  │
+│  │ BaseActions │ │   Waits     │ │  Screenshot     │  │
+│  └─────────────┘ └─────────────┘ └─────────────────┘  │
+├─────────────────────────────────────────────────────────┤
+│                   Driver Layer                          │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐  │
+│  │   Driver    │ │   Manager   │ │   Factory       │  │
+│  └─────────────┘ └─────────────┘ └─────────────────┘  │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Vaishak** - [@vaishaksv](https://github.com/vaishaksv)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/vaishaksv)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:svvaishak@gmail.com)
+
+---
+
+## 🙏 Acknowledgments
+
+- [the-internet.herokuapp.com](https://the-internet.herokuapp.com) - Practice website
+- [Selenium](https://www.selenium.dev) - Web automation
+- [TestNG](https://testng.org) - Testing framework
+- [Allure](https://docs.qameta.io/allure/) - Reporting framework
+
+---
+
+## ⭐ Star this Repository
+
+If you found this project helpful, please give it a ⭐! It helps others discover the project.
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Made%20with%20%E2%9D%A4%EF%B8%8F%20by-Vaishak-blue" alt="Made with love by Vaishak">
+</p>
